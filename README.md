@@ -1,6 +1,6 @@
 # ai-chatbot
 
-Lightweight AI chatbot (FastAPI backend + Streamlit frontend) that demonstrates using a Groq-compatible client for model inference. This repo provides a small local server (`server.py`) that exposes a chat API and a simple Streamlit-based frontend (`frontend.py`).
+Lightweight AI chatbot (FastAPI backend + Streamlit frontend) demonstrating a Groq/OpenAI-compatible client for model inference. The repo contains a small FastAPI server (`server.py`) exposing a chat API and a Streamlit UI (`frontend.py`) for manual testing.
 
 ## Contents
 
@@ -9,6 +9,7 @@ Lightweight AI chatbot (FastAPI backend + Streamlit frontend) that demonstrates 
 - `settings.py` — Pydantic settings loader (reads `.env`).
 - `model.py` — Pydantic models used by the API.
 - `.env` — Local environment variables (gitignored).
+- `requirements.txt` — pinned dependencies for the project (generated).
 
 ## Features
 
@@ -22,10 +23,16 @@ Lightweight AI chatbot (FastAPI backend + Streamlit frontend) that demonstrates 
 - pip
 - Recommended Python packages: `fastapi`, `uvicorn`, `streamlit`, `pydantic`, `pydantic-settings`, `requests`, `openai` (or the Groq client compatible package)
 
-If you don't have a `requirements.txt`, a minimal install is:
+Install dependencies (recommended):
 
 ```powershell
 python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+If you prefer to install individual packages, a minimal set is shown below — but `requirements.txt` is provided in this repo so prefer the `-r` flow for reproducibility:
+
+```powershell
 python -m pip install fastapi uvicorn streamlit pydantic pydantic-settings requests openai
 ```
 
@@ -91,16 +98,9 @@ Expected response:
 
 ## Known issues & suggested fixes
 
-- Endpoint name mismatch: `frontend.py` calls the clear route at `/clear-convo` but the backend defines `/clear-conv`. To fix, either:
+No active issues are known at the moment. The frontend currently calls `/clear-conv` and the backend exposes the same route, and `requirements.txt` is present for reproducible installs.
 
-  - Update `frontend.py` to call `/clear-conv` (quick fix), or
-  - Change the backend route to match the frontend.
-
-  Suggested frontend change (in `frontend.py`):
-
-  - Replace `/clear-convo` with `/clear-conv`.
-
-- Conversation clearing bug in backend: `clear_convo` currently assigns `conversation_hist = []` inside the function which creates a local variable and doesn't clear the module-level list. Replace the function body with `conversation_hist.clear()` (or declare `global conversation_hist` and reassign) to clear the shared list.
+If you notice anything else (behavioral mismatch, errors, or feature requests), tell me which file you'd like me to change and I can apply a small patch and run a quick smoke test.
 
 ## Security and secrets
 
@@ -119,11 +119,3 @@ PRs welcome. For code changes that alter behavior, include tests and update the 
 MIT
 
 ---
-
-If you'd like, I can also:
-
-- Patch the endpoint name mismatch in `frontend.py` or `server.py`.
-- Fix the `clear_convo` bug so the DELETE action actually clears the server conversation history.
-- Add a `requirements.txt` listing the exact packages used.
-
-Tell me which of the above (if any) you'd like me to do next.

@@ -11,7 +11,7 @@ user_input = st.text_input("Enter your prompt :")
 
 if st.button("Clear Chat"):
     st.session_state.chat_history = []
-    URL = f"{settings.API_URL}/clear-convo"
+    URL = f"{settings.API_URL}/clear-conv"
     requests.delete(URL)
 
 if st.button("Send") and user_input:
