@@ -27,6 +27,12 @@ if st.button("Send") and user_input:
 
     for sender, msg in st.session_state.chat_history:
         if sender == "You":
-            st.write(f"You : {msg}")
+            st.markdown(
+                f"<p><b style='color:#1E90FF;'>You:</b> {msg}</p>",
+                unsafe_allow_html=True,
+            )
         else:
-            st.write(f"Bot : {msg}")
+            st.markdown(
+                f"<p><b style='color:#32CD32;'>Bot:</b> {msg}</p>",
+                unsafe_allow_html=True,
+            )
